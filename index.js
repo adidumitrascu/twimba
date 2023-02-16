@@ -1,6 +1,8 @@
 import { tweetsData } from './data.js'
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
+
+
 document.addEventListener('click', function(e){
     if(e.target.dataset.like){
        handleLikeClick(e.target.dataset.like) 
@@ -14,7 +16,15 @@ document.addEventListener('click', function(e){
     else if(e.target.id === 'tweet-btn'){
         handleTweetBtnClick()
     }
+    else if(e.target.dataset.replyTweet) {
+        document.getElementById('reply').style.display = 'block'
+    }
+    else if(e.target.id === 'close-btn'){
+        document.getElementById('reply').style.display = 'none'
+    }
+    
 })
+
  
 function handleLikeClick(tweetId){ 
     const targetTweetObj = tweetsData.filter(function(tweet){
@@ -134,9 +144,9 @@ function getFeedHtml(){
                     ${tweet.retweets}
                 </span>
                 <span class="tweet-detail">
-                    <i class="fa-solid fa-reply reply}"
-                    data-retweet="${tweet.uuid}"
-                    ></i><a class="reply-btn">Reply</a>
+                    <i class="fa-solid fa-reply"></i>
+                    <a class="reply-btn" data-reply-tweet="${tweet.uuid}"
+                    >Reply</a>
                 </span>
             </div>   
         </div>            
@@ -156,14 +166,19 @@ function getReplyHtml() {
 
     replyHtml += `
 <h3 >Reply to @me</h3>
-<button class="close-btn">&times</button>
+<button id="close-btn">&times</button>
 <div id="reply-area" class="reply-area">
     <textarea class="reply-input-area"></textarea>
     <div id="tweet-reply">
         <button class="tweet-reply-btn">Tweet</button>
+        <div>
+            <i class="fa-solid fa-camera reply-icon"></i>
+            <i class="fa-solid fa-list reply-icon"></i>
+            <i class="fa-solid fa-location-dot reply-icon"></i>
+        </div>
     </div>
     <div class="reply-msg">
-        
+    
     </div>
 </div>
     
