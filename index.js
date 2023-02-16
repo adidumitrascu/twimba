@@ -162,6 +162,9 @@ function getReplyHtml() {
     <div id="tweet-reply">
         <button class="tweet-reply-btn">Tweet</button>
     </div>
+    <div class="reply-msg">
+        
+    </div>
 </div>
     
 `
