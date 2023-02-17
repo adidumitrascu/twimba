@@ -166,7 +166,6 @@ button{
     color: white;
     font-weight: 900;
     margin: 15px 0 15px 18px;
-    
 }
 
 #reply-area{
@@ -175,7 +174,6 @@ button{
     padding: 18px 20px;
     border-radius: 10px;
     height: 300px;
- 
 }
 
 #reply-input-area {
@@ -185,7 +183,6 @@ button{
     height: 100px;
     width: 420px;
     padding: 10px;
-
 }
 
 #close-btn {
@@ -221,7 +218,6 @@ button{
     color: rgb(87, 86, 86);
     border: 1px solid rgba(138, 184, 196, 0.658);
     border-radius: 8px;
-
 }
 
 .reply-msg {
