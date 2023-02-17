@@ -17,10 +17,13 @@ document.addEventListener('click', function(e){
         handleTweetBtnClick()
     }
     else if(e.target.dataset.replyTweet) {
-        document.getElementById('reply').style.display = 'block'
+        handleReplyTweet(e.target.dataset.replyTweet)
     }
     else if(e.target.id === 'close-btn'){
         document.getElementById('reply').style.display = 'none'
+    }
+    else if(e.target.id === 'tweet-reply-btn'){
+        handleTweetReplyBtn()
     }
     
 })
@@ -79,6 +82,25 @@ function handleTweetBtnClick(){
     tweetInput.value = ''
     }
 
+}
+
+function handleTweetReplyBtn() {
+    const tweetReply = document.getElementById('reply-input-area')
+    if (tweetReply.value) {
+        document.getElementById('reply').style.display = 'none' 
+    }
+
+}
+
+function handleReplyTweet(tweetId){
+    const targetTweetObj = tweetsData.filter(function(tweet){
+        return tweet.uuid === tweetId
+    })[0]
+    const tweetText = targetTweetObj.tweetText
+    const handle = targetTweetObj.handle 
+
+    document.getElementById('reply').style.display = 'block'
+    document.getElementById('reply').innerHTML = getReplyHtml(tweetText, handle)
 }
 
 function getFeedHtml(){
@@ -160,17 +182,18 @@ function getFeedHtml(){
    return feedHtml 
 }
 
-function getReplyHtml() {
-    
+function getReplyHtml(text, handle) {
     let replyHtml = `` 
 
-    replyHtml += `
-<h3 >Reply to @me</h3>
+    replyHtml = `
+<h3>${handle}</h3>
 <button id="close-btn">&times</button>
 <div id="reply-area" class="reply-area">
-    <textarea class="reply-input-area"></textarea>
+    <textarea 
+    placeholder="Tweet your reply" 
+    id="reply-input-area"></textarea>
     <div id="tweet-reply">
-        <button class="tweet-reply-btn">Tweet</button>
+        <button id="tweet-reply-btn">Tweet</button>
         <div>
             <i class="fa-solid fa-camera reply-icon"></i>
             <i class="fa-solid fa-list reply-icon"></i>
@@ -178,17 +201,16 @@ function getReplyHtml() {
         </div>
     </div>
     <div class="reply-msg">
-    
+        <p><span class="reply-handle">${handle}</span>\u00A0\u00A0${text}</p>
     </div>
 </div>
-    
 `
+
     return replyHtml
 }
 
 function render(){
     document.getElementById('feed').innerHTML = getFeedHtml()
-    document.getElementById('reply').innerHTML = getReplyHtml()
 }
 
 render()

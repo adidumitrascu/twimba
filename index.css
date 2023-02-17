@@ -146,7 +146,7 @@ button{
 
 /* reply */
 .reply {
-    display: block;
+    display: none;
     position: fixed;
     background:rgba(10, 10, 10, 0.705);
     height: 400px;
@@ -173,13 +173,12 @@ button{
     background: white;
     margin: 0 10px;
     padding: 18px 20px;
-    color: red;
     border-radius: 10px;
     height: 300px;
  
 }
 
-.reply-input-area {
+#reply-input-area {
     border: 2px solid rgb(78, 197, 245);
     border-radius: 10px;
     box-shadow: 0px 0px 20px rgb(127, 209, 241);
@@ -207,21 +206,32 @@ button{
     gap: 226px;
 }
 
-.tweet-reply-btn {
-    background-image: linear-gradient(rgb(255, 255, 255), rgba(220, 237, 238, 0.938));
-    color: rgb(87, 86, 86);
-    border: 1px solid rgba(138, 184, 196, 0.658);
+#tweet-reply-btn {
     padding: 13px 15px 10px 15px;
     width: auto;
     height: auto;
+    border: 1px solid rgba(138, 184, 196, 0.658);
     border-radius: 8px;
     font-weight: 400;
-    background-color: none;
+}
+
+#tweet-reply-btn:active {
+    background-image: linear-gradient(rgb(255, 255, 255), 
+    rgba(220, 237, 238, 0.938));
+    color: rgb(87, 86, 86);
+    border: 1px solid rgba(138, 184, 196, 0.658);
+    border-radius: 8px;
+
 }
 
 .reply-msg {
-    margin: 20px;
+    margin: 15px;
     height: 40%;
     overflow: auto;
+}
+
+.reply-handle {
+    font-weight: bolder;
+    color: #555;
 }
 
