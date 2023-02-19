@@ -22,8 +22,8 @@ document.addEventListener('click', function(e){
     else if(e.target.id === 'close-btn'){
         document.getElementById('reply').style.display = 'none'
     }
-    else if(e.target.id === 'tweet-reply-btn'){
-        handleTweetReplyBtn()
+    else if(e.target.dataset.tweetReplyBtn) {
+        handleTweetReplyBtn(e.target.dataset.tweetReplyBtn)
     }
     
 })
@@ -84,13 +84,6 @@ function handleTweetBtnClick(){
 
 }
 
-function handleTweetReplyBtn() {
-    const tweetReply = document.getElementById('reply-input-area')
-    if (tweetReply.value) {
-        document.getElementById('reply').style.display = 'none' 
-    }
-
-}
 
 function handleReplyTweet(tweetId){
     const targetTweetObj = tweetsData.filter(function(tweet){
@@ -98,9 +91,30 @@ function handleReplyTweet(tweetId){
     })[0]
     const tweetText = targetTweetObj.tweetText
     const handle = targetTweetObj.handle 
+    const uuid = targetTweetObj.uuid
 
+    document.getElementById('reply').innerHTML = getReplyHtml(tweetText, handle, uuid)
     document.getElementById('reply').style.display = 'block'
-    document.getElementById('reply').innerHTML = getReplyHtml(tweetText, handle)
+
+}
+
+function handleTweetReplyBtn(tweetId) {
+    const tweetReply = document.getElementById('reply-input-area')
+
+    if (tweetReply.value) {
+        const targetTweetObj = tweetsData.filter(function(tweet){
+        return tweet.uuid === tweetId
+        })[0]
+
+        targetTweetObj.replies.unshift({
+            handle: `@Scrimba`,
+            profilePic: `images/scrimbalogo.png`,
+            tweetText: tweetReply.value
+        })
+
+        document.getElementById('reply').style.display = 'none' 
+    }
+    render()
 }
 
 function getFeedHtml(){
@@ -179,10 +193,10 @@ function getFeedHtml(){
 </div>
 `
    })
-   return feedHtml 
+   return feedHtml
 }
 
-function getReplyHtml(text, handle) {
+function getReplyHtml(text, handle, uuid) {
     let replyHtml = `` 
 
     replyHtml = `
@@ -193,7 +207,7 @@ function getReplyHtml(text, handle) {
     placeholder="Tweet your reply" 
     id="reply-input-area"></textarea>
     <div id="tweet-reply">
-        <button id="tweet-reply-btn">Tweet</button>
+        <button id="tweet-reply-btn" data-tweet-reply-btn="${uuid}">Tweet</button>
         <div>
             <i class="fa-solid fa-camera reply-icon"></i>
             <i class="fa-solid fa-list reply-icon"></i>
