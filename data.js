@@ -1,4 +1,4 @@
-export const tweetsData = [   
+export const data = [   
     {
         handle: `@TrollBot66756542 💎`,
         profilePic: `images/troll.jpg`,
@@ -22,11 +22,13 @@ export const tweetsData = [
                 handle: `@TomCruise ✅`,
                 profilePic: `images/tcruise.png`,
                 tweetText: `Yes! Sign me up! 😎🛩`,
+                uuid: '4b161eee-c0f5-4545-9c4b-856294422311',
             },
                   {
                 handle: `@ChuckNorris ✅`,
                 profilePic: `images/chucknorris.jpeg`,
                 tweetText: `I went last year😴`,
+                uuid: '4b161eee-c0f5-4545-9c4b-8562944223zz',
             },
         ],
         isLiked: false,
@@ -44,11 +46,13 @@ export const tweetsData = [
                 handle: `@StackOverflower ☣️`,
                 profilePic: `images/overflow.png`,
                 tweetText: `No. Obviosuly not. Go get a job in McDonald's.`,
+                uuid: '4b161eee-c0f5-4545-9c4b-856294422367',
             },
             {
                 handle: `@YummyCoder64`,
                 profilePic: `images/love.png`,
                 tweetText: `You are wonderful just as you are! ❤️`,
+                uuid: '4b161eee-c0f5-4545-9c4b-856294422334',
             },
         ],
         isLiked: false,

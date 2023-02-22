@@ -83,6 +83,14 @@ button{
     font-weight: 600;
 }
 
+.delete-btn {
+    display: block;
+    height: 30px;
+    width: 30px;
+    padding: 0;
+    margin-left: auto; 
+}
+
 /* tweet */
 
 .tweet{
@@ -112,7 +120,7 @@ button{
 }
 
 .tweet-reply{
-    border-top: 1px solid lightgray;
+    position: relative;    border-top: 1px solid lightgray;
     padding: 20px 0 0 0px;
     margin: 10px 0 10px 40px;
     width: 80%;

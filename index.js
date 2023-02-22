@@ -1,7 +1,14 @@
-import { tweetsData } from './data.js'
+import { data } from './data.js'
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
+let tweetsData = data
 
+let tweetsDataFromLocalStorage = JSON.parse(localStorage.getItem("tweetsData"))
+
+if (tweetsDataFromLocalStorage) {
+    tweetsData = tweetsDataFromLocalStorage
+    render()
+}
 
 document.addEventListener('click', function(e){
     if(e.target.dataset.like){
@@ -24,6 +31,9 @@ document.addEventListener('click', function(e){
     }
     else if(e.target.dataset.tweetReplyBtn) {
         handleTweetReplyBtn(e.target.dataset.tweetReplyBtn)
+    }
+    else if(e.target.dataset.deleteReply) {
+        removeTweetReply(e.target.dataset.deleteReply)
     }
     
 })
@@ -109,13 +119,34 @@ function handleTweetReplyBtn(tweetId) {
         targetTweetObj.replies.unshift({
             handle: `@Scrimba`,
             profilePic: `images/scrimbalogo.png`,
-            tweetText: tweetReply.value
+            tweetText: tweetReply.value,
+            uuid: uuidv4()
         })
 
         document.getElementById('reply').style.display = 'none' 
     }
     render()
 }
+
+
+function removeTweetReply(replyId) {
+    const removeById = (tweetsData, replyId) => tweetsData.reduce((acc, obj) => 
+        (obj.uuid === replyId) 
+            ? acc 
+            : [ ...acc, 
+                {
+                ...obj, 
+                ...(obj.replies && { replies: removeById(obj.replies, replyId) }) 
+                }
+            ]
+        , []);
+
+        
+        tweetsData = removeById(tweetsData, replyId)
+        render()
+
+}
+
 
 function getFeedHtml(){
     let feedHtml = ``
@@ -142,11 +173,13 @@ function getFeedHtml(){
 <div class="tweet-reply">
     <div class="tweet-inner">
         <img src="${reply.profilePic}" class="profile-pic">
-            <div>
-                <p class="handle">${reply.handle}</p>
-                <p class="tweet-text">${reply.tweetText}</p>
-            </div>
+        <div>
+            <p class="handle">${reply.handle}</p>
+            <p class="tweet-text">${reply.tweetText}</p>
+            <button class="delete-btn" 
+            data-delete-reply="${reply.uuid}">&times</button>
         </div>
+    </div>
 </div>
 `
             })
@@ -207,7 +240,8 @@ function getReplyHtml(text, handle, uuid) {
     placeholder="Tweet your reply" 
     id="reply-input-area"></textarea>
     <div id="tweet-reply">
-        <button id="tweet-reply-btn" data-tweet-reply-btn="${uuid}">Tweet</button>
+        <button id="tweet-reply-btn" 
+        data-tweet-reply-btn="${uuid}">Tweet</button>
         <div>
             <i class="fa-solid fa-camera reply-icon"></i>
             <i class="fa-solid fa-list reply-icon"></i>
@@ -215,7 +249,8 @@ function getReplyHtml(text, handle, uuid) {
         </div>
     </div>
     <div class="reply-msg">
-        <p><span class="reply-handle">${handle}</span>\u00A0\u00A0${text}</p>
+        <p><span class="reply-handle">
+        ${handle}</span>\u00A0\u00A0${text}</p>
     </div>
 </div>
 `
@@ -225,9 +260,11 @@ function getReplyHtml(text, handle, uuid) {
 
 function render(){
     document.getElementById('feed').innerHTML = getFeedHtml()
+    localStorage.setItem("tweetsData", JSON.stringify(tweetsData))
 }
 
 render()
+
 
 
 
