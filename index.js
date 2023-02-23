@@ -34,10 +34,8 @@ document.addEventListener('click', function(e){
     }
     else if(e.target.dataset.deleteReply) {
         removeTweetReply(e.target.dataset.deleteReply)
-    }
-    
+    }    
 })
-
  
 function handleLikeClick(tweetId){ 
     const targetTweetObj = tweetsData.filter(function(tweet){
@@ -106,6 +104,21 @@ function handleReplyTweet(tweetId){
     document.getElementById('reply').innerHTML = getReplyHtml(tweetText, handle, uuid)
     document.getElementById('reply').style.display = 'block'
 
+    const messageEl = document.getElementById('reply-input-area')
+    const counterEl = document.getElementById('counter-el');
+
+    messageEl.addEventListener('input', function (e) {
+        const target = e.target;
+
+            // Get the `maxlength` attribute
+        const maxLength = target.getAttribute('maxlength');
+
+            // Count the current number of characters
+        const currentLength = target.value.length;
+        counterEl.innerHTML = `${currentLength}/${maxLength}`;
+        
+    });
+
 }
 
 function handleTweetReplyBtn(tweetId) {
@@ -123,11 +136,11 @@ function handleTweetReplyBtn(tweetId) {
             uuid: uuidv4()
         })
 
-        document.getElementById('reply').style.display = 'none' 
+        document.getElementById('reply').style.display = 'none'   
     }
+
     render()
 }
-
 
 function removeTweetReply(replyId) {
     const removeById = (tweetsData, replyId) => tweetsData.reduce((acc, obj) => 
@@ -141,12 +154,11 @@ function removeTweetReply(replyId) {
             ]
         , []);
 
-        
         tweetsData = removeById(tweetsData, replyId)
         render()
-
 }
 
+  
 
 function getFeedHtml(){
     let feedHtml = ``
@@ -184,8 +196,7 @@ function getFeedHtml(){
 `
             })
         }
-        
-          
+                 
         feedHtml += `
 <div class="tweet">
     <div class="tweet-inner">
@@ -238,10 +249,13 @@ function getReplyHtml(text, handle, uuid) {
 <div id="reply-area" class="reply-area">
     <textarea 
     placeholder="Tweet your reply" 
-    id="reply-input-area"></textarea>
+    id="reply-input-area" maxlength='140'></textarea>
     <div id="tweet-reply">
-        <button id="tweet-reply-btn" 
-        data-tweet-reply-btn="${uuid}">Tweet</button>
+        <div>
+            <span id="counter-el">0/140</span>
+            <button id="tweet-reply-btn" 
+            data-tweet-reply-btn="${uuid}">Tweet</button>
+        </div>
         <div>
             <i class="fa-solid fa-camera reply-icon"></i>
             <i class="fa-solid fa-list reply-icon"></i>
@@ -254,7 +268,6 @@ function getReplyHtml(text, handle, uuid) {
     </div>
 </div>
 `
-
     return replyHtml
 }
 
@@ -264,6 +277,7 @@ function render(){
 }
 
 render()
+
 
 
 

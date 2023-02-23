@@ -40,6 +40,10 @@ i{
     border-bottom: 1px solid #999;
 }
 
+#counter-el {
+    margin: 10px;
+}
+
 /* layout */
 
 main, header{
@@ -208,7 +212,7 @@ button{
 #tweet-reply {
     display: flex;
     flex-direction: row-reverse;    
-    gap: 226px;
+    justify-content: space-between;
 }
 
 #tweet-reply-btn {
