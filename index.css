@@ -9,7 +9,7 @@ html, body {
 h1{
     color: #0F8CDF;
     margin-bottom: 10px;
-    font-size: 20px;
+    font-size: 30px;
 }
 
 i{
@@ -47,6 +47,7 @@ i{
 /* layout */
 
 main, header{
+    display: block;
     width: 290px;
     margin: 0 auto;
 }
@@ -162,7 +163,8 @@ button{
     position: fixed;
     background:rgba(10, 10, 10, 0.705);
     height: 400px;
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     top: 0;
     bottom: 0;
     left: 0;
@@ -193,8 +195,10 @@ button{
     border-radius: 10px;
     box-shadow: 0px 0px 20px rgb(127, 209, 241);
     height: 100px;
-    width: 420px;
+    width: 100%;
     padding: 10px;
+    box-sizing: border-box;
+    
 }
 
 #close-btn {
